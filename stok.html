@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informasi Bahan Ajar - Sistem Tracking Bahan Ajar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Dashboard Admin</h2>
+                <p id="userRole">Administrator</p>
+            </div>
+            
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <a href="dashboard.html" class="menu-link">
+                        <span>🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="stok.html" class="menu-link active">
+                        <span>📚</span>
+                        <span>Informasi Bahan Ajar</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tracking.html" class="menu-link">
+                        <span>📦</span>
+                        <span>Tracking Pengiriman</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="toggleSubmenu(event)">
+                        <span>📊</span>
+                        <span>Laporan</span>
+                    </a>
+                    <ul class="submenu" id="laporanSubmenu">
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span>Monitoring Progress DO</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span>Rekap Bahan Ajar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span>📜</span>
+                        <span>Histori Transaksi</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Informasi Bahan Ajar</h1>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">AD</div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px;" id="userName">Admin SITTA</div>
+                        <div style="font-size: 12px; color: #6b7280;" id="userLocation">Pusat</div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Tambah Bahan Ajar Baru</h2>
+                </div>
+                
+                <form id="addStokForm" onsubmit="tambahBahanAjar(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="kodeLokasi">Kode Lokasi</label>
+                            <input type="text" id="kodeLokasi" class="form-control" placeholder="Contoh: 0TMP01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="kodeBarang">Kode Barang</label>
+                            <input type="text" id="kodeBarang" class="form-control" placeholder="Contoh: ASIP4301" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="namaBarang">Nama Barang</label>
+                            <input type="text" id="namaBarang" class="form-control" placeholder="Nama Bahan Ajar" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jenisBarang">Jenis Barang</label>
+                            <input type="text" id="jenisBarang" class="form-control" placeholder="Contoh: BMP" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edisi">Edisi</label>
+                            <input type="text" id="edisi" class="form-control" placeholder="Contoh: 2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="stok">Stok</label>
+                            <input type="number" id="stok" class="form-control" placeholder="Jumlah Stok" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success">Tambah Bahan Ajar</button>
+                </form>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Daftar Bahan Ajar</h2>
+                </div>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kode Lokasi</th>
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Jenis</th>
+                                <th>Edisi</th>
+                                <th>Stok</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stokTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
