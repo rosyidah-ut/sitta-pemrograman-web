@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistem Tracking Bahan Ajar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Dashboard Admin</h2>
+                <p id="userRole">Administrator</p>
+            </div>
+            
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <a href="dashboard.html" class="menu-link active">
+                        <span>🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="stok.html" class="menu-link">
+                        <span>📚</span>
+                        <span>Informasi Bahan Ajar</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tracking.html" class="menu-link">
+                        <span>📦</span>
+                        <span>Tracking Pengiriman</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="toggleSubmenu(event)">
+                        <span>📊</span>
+                        <span>Laporan</span>
+                    </a>
+                    <ul class="submenu" id="laporanSubmenu">
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span>Monitoring Progress DO</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span>Rekap Bahan Ajar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span>📜</span>
+                        <span>Histori Transaksi</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">AD</div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px;" id="userName">Admin SITTA</div>
+                        <div style="font-size: 12px; color: #6b7280;" id="userLocation">Pusat</div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalBahan">0</div>
+                    <div class="stat-label">Total Bahan Ajar</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-value" id="totalStok">0</div>
+                    <div class="stat-label">Total Stok</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-value" id="totalPengiriman">2</div>
+                    <div class="stat-label">Total Pengiriman</div>
+                </div>
+                <div class="stat-card info">
+                    <div class="stat-value" id="dalamPerjalanan">1</div>
+                    <div class="stat-label">Dalam Perjalanan</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Cari Delivery Order</h2>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" id="searchDO" placeholder="Masukkan nomor delivery order (contoh: 2023001234)" class="form-control">
+                    <button class="btn btn-primary" onclick="searchDeliveryOrder()">Cari</button>
+                </div>
+                
+                <div id="trackingResult" class="tracking-result">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Nomor DO</label>
+                            <div class="value" id="resultNomorDO">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Nama Mahasiswa</label>
+                            <div class="value" id="resultNama">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Ekspedisi</label>
+                            <div class="value" id="resultEkspedisi">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Tanggal Kirim</label>
+                            <div class="value" id="resultTanggal">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Jenis Paket</label>
+                            <div class="value" id="resultPaket">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Total Pembayaran</label>
+                            <div class="value" id="resultTotal">-</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <h3 style="margin-bottom: 20px;">Status Pengiriman</h3>
+                        <div class="progress-steps" id="progressSteps">
+                            <div class="progress-line" id="progressLine"></div>
+                            <div class="step" id="step1">
+                                <div class="step-circle">1</div>
+                                <div class="step-label">Diterima</div>
+                            </div>
+                            <div class="step" id="step2">
+                                <div class="step-circle">2</div>
+                                <div class="step-label">Diproses</div>
+                            </div>
+                            <div class="step" id="step3">
+                                <div class="step-circle">3</div>
+                                <div class="step-label">Dalam Perjalanan</div>
+                            </div>
+                            <div class="step" id="step4">
+                                <div class="step-circle">4</div>
+                                <div class="step-label">Terkirim</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-header" style="margin-top: 30px;">
+                        <h2>Detail Perjalanan</h2>
+                    </div>
+                    <div class="timeline" id="timeline">
+                    </div>
+                </div>
+                
+                <div id="notFound" style="display: none; text-align: center; padding: 40px; color: #6b7280;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">📦</div>
+                    <h3>Data tidak ditemukan</h3>
+                    <p>Nomor delivery order yang Anda cari tidak ditemukan dalam sistem.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
