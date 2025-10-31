@@ -1,0 +1,8 @@
+.replit
+replit.nix
+.upm
+.cache
+.pythonlibs
+__pycache__/
+*.pyc
+.DS_Store
