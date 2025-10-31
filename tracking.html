@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking Pengiriman - Sistem Tracking Bahan Ajar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Dashboard Admin</h2>
+                <p id="userRole">Administrator</p>
+            </div>
+            
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <a href="dashboard.html" class="menu-link">
+                        <span>🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="stok.html" class="menu-link">
+                        <span>📚</span>
+                        <span>Informasi Bahan Ajar</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tracking.html" class="menu-link active">
+                        <span>📦</span>
+                        <span>Tracking Pengiriman</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="toggleSubmenu(event)">
+                        <span>📊</span>
+                        <span>Laporan</span>
+                    </a>
+                    <ul class="submenu" id="laporanSubmenu">
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span>Monitoring Progress DO</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <span>Rekap Bahan Ajar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <span>📜</span>
+                        <span>Histori Transaksi</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Tracking Pengiriman</h1>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">AD</div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 14px;" id="userName">Admin SITTA</div>
+                        <div style="font-size: 12px; color: #6b7280;" id="userLocation">Pusat</div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Daftar Pengiriman</h2>
+                </div>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nomor DO</th>
+                                <th>Nama Penerima</th>
+                                <th>Ekspedisi</th>
+                                <th>Tanggal Kirim</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trackingTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="detailModal" class="tracking-result">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Detail Pengiriman</h2>
+                    </div>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Nomor DO</label>
+                            <div class="value" id="detailNomorDO">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Nama Mahasiswa</label>
+                            <div class="value" id="detailNama">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Ekspedisi</label>
+                            <div class="value" id="detailEkspedisi">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Tanggal Kirim</label>
+                            <div class="value" id="detailTanggal">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Jenis Paket</label>
+                            <div class="value" id="detailPaket">-</div>
+                        </div>
+                        <div class="info-item">
+                            <label>Total Pembayaran</label>
+                            <div class="value" id="detailTotal">-</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <h3 style="margin-bottom: 20px;">Status Pengiriman</h3>
+                        <div class="progress-steps" id="detailProgressSteps">
+                            <div class="progress-line" id="detailProgressLine"></div>
+                            <div class="step" id="detailStep1">
+                                <div class="step-circle">1</div>
+                                <div class="step-label">Diterima</div>
+                            </div>
+                            <div class="step" id="detailStep2">
+                                <div class="step-circle">2</div>
+                                <div class="step-label">Diproses</div>
+                            </div>
+                            <div class="step" id="detailStep3">
+                                <div class="step-circle">3</div>
+                                <div class="step-label">Dalam Perjalanan</div>
+                            </div>
+                            <div class="step" id="detailStep4">
+                                <div class="step-circle">4</div>
+                                <div class="step-label">Terkirim</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-header" style="margin-top: 30px;">
+                        <h2>Riwayat Perjalanan</h2>
+                    </div>
+                    <div class="timeline" id="detailTimeline">
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="closeDetail()" style="margin-top: 20px;">Tutup</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
