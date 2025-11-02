@@ -55,7 +55,7 @@
     position: absolute;
     bottom: -30%;
     right: 5%;
-    width: 120px; /* Diperkecil */
+    width: 120px; 
     height: 120px;
     background: rgba(255, 255, 255, 0.08);
     border-radius: 50%;
@@ -68,13 +68,13 @@
 }
 
 .welcome-content h1 {
-    font-size: 20px; /* Diperkecil */
+    font-size: 20px; 
     margin-bottom: 4px;
     font-weight: 700;
 }
 
 .welcome-content p {
-    font-size: 13px; /* Diperkecil */
+    font-size: 13px; 
     opacity: 0.9;
     max-width: 450px;
 }
@@ -82,7 +82,7 @@
 .welcome-illustration {
     position: relative;
     z-index: 2;
-    width: 130px; /* Diperkecil */
+    width: 130px; 
     height: 130px;
     display: flex;
     align-items: center;
@@ -256,9 +256,7 @@ body {
     min-height: 100vh;
 }
 
-/* ============================================
-   SIDEBAR STYLES - MODERN DESIGN
-   ============================================ */
+/* sidebar style */
 .sidebar {
     width: 280px;
     background: var(--sidebar-bg);
@@ -428,9 +426,7 @@ body {
     background: var(--text-light);
 }
 
-/* ============================================
-   MAIN CONTENT STYLES
-   ============================================ */
+/* Main content style */
 .main-content {
     margin-left: 280px;
     flex: 1;
@@ -825,9 +821,7 @@ tbody tr:hover {
     margin-bottom: 16px;
 }
 
-/* ============================================
-   CARD STYLES
-   ============================================ */
+/* Card style */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 * {
@@ -1135,11 +1129,6 @@ body.dark-mode .icon-moon {
   transform: translateY(-4px);
 }
 
-
-/* ============================================
-   INFORMASI BAHAN AJAR PAGE STYLES (KHUSUS)
-   ============================================ */
-
 /* Form Card Enhancement - Khusus Stok Page */
 .stok-page .card {
     background: var(--white);
@@ -1446,9 +1435,7 @@ body.dark-mode .icon-moon {
     }
 }
 
-/* ============================================
-   TRACKING PENGIRIMAN - ACTION BUTTON COMPACT
-   ============================================ */
+/* Tracking Pengiriman */
 
 /* Action Button - Icon Only (Eye Icon) */
 .tracking-page .btn-sm {
@@ -1496,9 +1483,7 @@ body.dark-mode .icon-moon {
     min-width: 140px;
 }
 
-/* ============================================
-   RESPONSIVE STYLES
-   ============================================ */
+/* Responsive Style */
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
