@@ -1,177 +1,356 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Sistem Tracking Bahan Ajar</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <div class="dashboard-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>Dashboard Admin</h2>
-                <p id="userRole">Administrator</p>
-            </div>
-            
-            <ul class="menu-list">
-                <li class="menu-item">
-                    <a href="dashboard.html" class="menu-link active">
-                        <span>🏠</span>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="stok.html" class="menu-link">
-                        <span>📚</span>
-                        <span>Informasi Bahan Ajar</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="tracking.html" class="menu-link">
-                        <span>📦</span>
-                        <span>Tracking Pengiriman</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link" onclick="toggleSubmenu(event)">
-                        <span>📊</span>
-                        <span>Laporan</span>
-                    </a>
-                    <ul class="submenu" id="laporanSubmenu">
-                        <li class="menu-item">
-                            <a href="#" class="menu-link">
-                                <span>Monitoring Progress DO</span>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="#" class="menu-link">
-                                <span>Rekap Bahan Ajar</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <span>📜</span>
-                        <span>Histori Transaksi</span>
-                    </a>
-                </li>
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <img src="img/logo_UT.svg" alt="Logo UT" class="logo-ut" />
+          <h2>Dashboard Admin</h2>
+          <p id="userRole">Administrator</p>
+        </div>
+
+        <ul class="menu-list">
+          <li class="menu-item">
+            <a href="dashboard.html" class="menu-link active">
+              <i class="fa-solid fa-house"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="stok.html" class="menu-link">
+              <i class="fa-solid fa-book"></i>
+              <span>Informasi Bahan Ajar</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="tracking.html" class="menu-link">
+              <i class="fa-solid fa-truck"></i>
+              <span>Tracking Pengiriman</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="#" class="menu-link" onclick="toggleSubmenu(event)">
+              <i class="fa-solid fa-display"></i>
+              <span>Laporan</span>
+              <span class="arrow"
+                ><i class="fa-solid fa-chevron-down"></i
+              ></span>
+            </a>
+            <ul class="submenu" id="laporanSubmenu">
+              <li class="menu-item">
+                <a href="#" class="menu-link">
+                  <span></span>
+                  <!-- Tambahkan span kosong untuk emoji -->
+                  <span>Monitoring Progress DO</span>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="#" class="menu-link">
+                  <span></span>
+                  <!-- Tambahkan span kosong untuk emoji -->
+                  <span>Rekap Bahan Ajar</span>
+                </a>
+              </li>
             </ul>
-        </aside>
-        
-        <main class="main-content">
-            <div class="top-bar">
-                <div class="page-title">
-                    <h1>Dashboard</h1>
-                </div>
-                <div class="user-info">
-                    <div class="user-avatar" id="userAvatar">AD</div>
-                    <div>
-                        <div style="font-weight: 600; font-size: 14px;" id="userName">Admin SITTA</div>
-                        <div style="font-size: 12px; color: #6b7280;" id="userLocation">Pusat</div>
-                    </div>
-                    <button class="logout-btn" onclick="logout()">Logout</button>
-                </div>
+          </li>
+          <li class="menu-item">
+            <a href="#" class="menu-link">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+              <span>Histori Transaksi</span>
+            </a>
+          </li>
+        </ul>
+      </aside>
+
+      <main class="main-content">
+        <div class="top-bar">
+          <div class="topbar-left">
+            <div class="page-title">
+              <h1>SITTA (Sistem Informasi Tiras dan Transaksi Bahan Ajar)</h1>
             </div>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="totalBahan">0</div>
-                    <div class="stat-label">Total Bahan Ajar</div>
-                </div>
-                <div class="stat-card success">
-                    <div class="stat-value" id="totalStok">0</div>
-                    <div class="stat-label">Total Stok</div>
-                </div>
-                <div class="stat-card warning">
-                    <div class="stat-value" id="totalPengiriman">2</div>
-                    <div class="stat-label">Total Pengiriman</div>
-                </div>
-                <div class="stat-card info">
-                    <div class="stat-value" id="dalamPerjalanan">1</div>
-                    <div class="stat-label">Dalam Perjalanan</div>
-                </div>
+            <div class="breadcrumb">
+              <a href="dashboard.html">Dashboard</a>
             </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h2>Cari Delivery Order</h2>
-                </div>
-                
-                <div class="search-box">
-                    <input type="text" id="searchDO" placeholder="Masukkan nomor delivery order (contoh: 2023001234)" class="form-control">
-                    <button class="btn btn-primary" onclick="searchDeliveryOrder()">Cari</button>
-                </div>
-                
-                <div id="trackingResult" class="tracking-result">
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <label>Nomor DO</label>
-                            <div class="value" id="resultNomorDO">-</div>
-                        </div>
-                        <div class="info-item">
-                            <label>Nama Mahasiswa</label>
-                            <div class="value" id="resultNama">-</div>
-                        </div>
-                        <div class="info-item">
-                            <label>Ekspedisi</label>
-                            <div class="value" id="resultEkspedisi">-</div>
-                        </div>
-                        <div class="info-item">
-                            <label>Tanggal Kirim</label>
-                            <div class="value" id="resultTanggal">-</div>
-                        </div>
-                        <div class="info-item">
-                            <label>Jenis Paket</label>
-                            <div class="value" id="resultPaket">-</div>
-                        </div>
-                        <div class="info-item">
-                            <label>Total Pembayaran</label>
-                            <div class="value" id="resultTotal">-</div>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-section">
-                        <h3 style="margin-bottom: 20px;">Status Pengiriman</h3>
-                        <div class="progress-steps" id="progressSteps">
-                            <div class="progress-line" id="progressLine"></div>
-                            <div class="step" id="step1">
-                                <div class="step-circle">1</div>
-                                <div class="step-label">Diterima</div>
-                            </div>
-                            <div class="step" id="step2">
-                                <div class="step-circle">2</div>
-                                <div class="step-label">Diproses</div>
-                            </div>
-                            <div class="step" id="step3">
-                                <div class="step-circle">3</div>
-                                <div class="step-label">Dalam Perjalanan</div>
-                            </div>
-                            <div class="step" id="step4">
-                                <div class="step-circle">4</div>
-                                <div class="step-label">Terkirim</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card-header" style="margin-top: 30px;">
-                        <h2>Detail Perjalanan</h2>
-                    </div>
-                    <div class="timeline" id="timeline">
-                    </div>
-                </div>
-                
-                <div id="notFound" style="display: none; text-align: center; padding: 40px; color: #6b7280;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📦</div>
-                    <h3>Data tidak ditemukan</h3>
-                    <p>Nomor delivery order yang Anda cari tidak ditemukan dalam sistem.</p>
-                </div>
+          </div>
+          <div class="topbar-right">
+            <button class="notification-btn">
+              <i class="fa-solid fa-bell"></i>
+            </button>
+            <div class="user-info">
+              <div class="user-avatar" id="userAvatar">AD</div>
+              <div class="user-name" id="userName">Admin SITTA</div>
             </div>
-        </main>
+            <button class="logout-btn" onclick="logout()" title="Logout">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+          </div>
+        </div>
+        <div class="content-wrapper">
+          <!-- Welcome Banner -->
+          <div class="welcome-banner">
+            <div class="welcome-content">
+              <h1 id="greetingText">Selamat Pagi!</h1>
+              <p id="greetingSubtext">
+                Education is the passport to the future. So learn more & more
+              </p>
+            </div>
+            <div class="welcome-illustration">
+              <img src="img/learning.svg" alt="Student Illustration" />
+            </div>
+          </div>
+          <!-- Card Data Pemesanan -->
+          <div class="metrics-grid">
+            <div class="metric-card revenue-card">
+              <div class="metric-header">
+                <div class="metric-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-book-open-icon lucide-book-open"
+                  >
+                    <path d="M12 7v14" />
+                    <path
+                      d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-content">
+                <h3 class="metric-value">45,274</h3>
+              </div>
+              <div class="progress-bar">
+                <div
+                  class="progress-fill revenue-progress"
+                  data-progress="75"
+                ></div>
+              </div>
+              <p class="metric-label">Total Bahan Ajar</p>
+            </div>
+
+            <div class="metric-card users-card">
+              <div class="metric-header">
+                <div class="metric-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-box-icon lucide-box"
+                  >
+                    <path
+                      d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"
+                    />
+                    <path d="m3.3 7 8.7 5 8.7-5" />
+                    <path d="M12 22V12" />
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-content">
+                <h3 class="metric-value">12,847</h3>
+              </div>
+              <div class="progress-bar">
+                <div
+                  class="progress-fill users-progress"
+                  data-progress="65"
+                ></div>
+              </div>
+              <p class="metric-label">Total Pengiriman</p>
+            </div>
+
+            <div class="metric-card conversion-card">
+              <div class="metric-header">
+                <div class="metric-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-truck-icon lucide-truck"
+                  >
+                    <path
+                      d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"
+                    />
+                    <path d="M15 18H9" />
+                    <path
+                      d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"
+                    />
+                    <circle cx="17" cy="18" r="2" />
+                    <circle cx="7" cy="18" r="2" />
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-content">
+                <h3 class="metric-value">8,246</h3>
+              </div>
+              <div class="progress-bar">
+                <div
+                  class="progress-fill conversion-progress"
+                  data-progress="45"
+                ></div>
+              </div>
+              <p class="metric-label">Dalam Perjalanan</p>
+            </div>
+
+            <div class="metric-card orders-card">
+              <div class="metric-header">
+                <div class="metric-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-package-check-icon lucide-package-check"
+                  >
+                    <path d="m16 16 2 2 4-4" />
+                    <path
+                      d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"
+                    />
+                    <path d="m7.5 4.27 9 5.15" />
+                    <polyline points="3.29 7 12 12 20.71 7" />
+                    <line x1="12" x2="12" y1="22" y2="12" />
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-content">
+                <h3 class="metric-value">7,893</h3>
+              </div>
+              <div class="progress-bar">
+                <div
+                  class="progress-fill orders-progress"
+                  data-progress="85"
+                ></div>
+              </div>
+              <p class="metric-label">Telah Terkirim</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h2>Cari Delivery Order</h2>
+            </div>
+
+            <div class="search-box">
+              <input
+                type="text"
+                id="searchDO"
+                placeholder="Masukkan nomor delivery order (contoh: 2023001234)"
+                class="form-control"
+              />
+              <button class="btn btn-primary" onclick="searchDeliveryOrder()">
+                Cari
+              </button>
+            </div>
+
+            <div id="trackingResult" class="tracking-result">
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Nomor DO</label>
+                  <div class="value" id="resultNomorDO">-</div>
+                </div>
+                <div class="info-item">
+                  <label>Nama Mahasiswa</label>
+                  <div class="value" id="resultNama">-</div>
+                </div>
+                <div class="info-item">
+                  <label>Ekspedisi</label>
+                  <div class="value" id="resultEkspedisi">-</div>
+                </div>
+                <div class="info-item">
+                  <label>Tanggal Kirim</label>
+                  <div class="value" id="resultTanggal">-</div>
+                </div>
+                <div class="info-item">
+                  <label>Jenis Paket</label>
+                  <div class="value" id="resultPaket">-</div>
+                </div>
+                <div class="info-item">
+                  <label>Total Pembayaran</label>
+                  <div class="value" id="resultTotal">-</div>
+                </div>
+              </div>
+
+              <div class="progress-section">
+                <h3 style="margin-bottom: 20px">Status Pengiriman</h3>
+                <div class="progress-steps" id="progressSteps">
+                  <div class="progress-line" id="progressLine"></div>
+                  <div class="step" id="progressStep1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Diterima</div>
+                  </div>
+                  <div class="step" id="progressStep2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Diproses</div>
+                  </div>
+                  <div class="step" id="progressStep3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Dalam Perjalanan</div>
+                  </div>
+                  <div class="step" id="progressStep4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Terkirim</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-header" style="margin-top: 30px">
+                <h2>Detail Perjalanan</h2>
+              </div>
+              <div class="timeline" id="timeline"></div>
+            </div>
+
+            <div
+              id="notFound"
+              style="
+                display: none;
+                text-align: center;
+                padding: 40px;
+                color: #6b7280;
+              "
+            >
+              <div style="font-size: 48px; margin-bottom: 16px">📦</div>
+              <h3>Data tidak ditemukan</h3>
+              <p>
+                Nomor delivery order yang Anda cari tidak ditemukan dalam
+                sistem.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-    
+
     <script src="js/data.js"></script>
     <script src="js/script.js"></script>
-</body>
+  </body>
 </html>

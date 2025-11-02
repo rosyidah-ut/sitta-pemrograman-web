@@ -1,3 +1,4 @@
+// Fungsi untuk cek autentikasi
 function checkAuth() {
     const currentUser = sessionStorage.getItem('currentUser');
     const currentPage = window.location.pathname;
@@ -14,19 +15,63 @@ function checkAuth() {
     return null;
 }
 
+// Fungsi logout
 function logout() {
     sessionStorage.removeItem('currentUser');
     window.location.href = 'index.html';
 }
 
-function toggleSubmenu(event) {
-    event.preventDefault();
-    const submenu = document.getElementById('laporanSubmenu');
-    if (submenu) {
-        submenu.classList.toggle('show');
+// Set greeting berdasarkan waktu
+function setGreeting() {
+    const hour = new Date().getHours();
+    const greetingText = document.getElementById('greetingText');
+    const greetingSubtext = document.getElementById('greetingSubtext');
+    const user = checkAuth();
+    
+    if (greetingText && user) {
+        let greeting = '';
+        let subtext = '';
+        
+        if (hour >= 5 && hour < 11) {
+            greeting = `Selamat Pagi, ${user.nama.split(' ')[0]}! ☀️`;
+            subtext = 'Semangat memulai hari dengan produktif!';
+        } else if (hour >= 11 && hour < 15) {
+            greeting = `Selamat Siang, ${user.nama.split(' ')[0]}! 🌤️`;
+            subtext = 'Tetap semangat di tengah hari yang sibuk!';
+        } else if (hour >= 15 && hour < 18) {
+            greeting = `Selamat Sore, ${user.nama.split(' ')[0]}! 🌅`;
+            subtext = 'Ayo selesaikan tugas hari ini dengan baik!';
+        } else {
+            greeting = `Selamat Malam, ${user.nama.split(' ')[0]}! 🌙`;
+            subtext = 'Waktu yang tepat untuk review dan evaluasi!';
+        }
+        
+        greetingText.textContent = greeting;
+        greetingSubtext.textContent = subtext;
     }
 }
 
+// Panggil fungsi setGreeting di dashboard
+if (window.location.pathname.includes('dashboard.html')) {
+    setGreeting();
+}
+
+function toggleSubmenu(event) {
+    event.preventDefault();
+    const submenu = document.getElementById('laporanSubmenu');
+    const menuLink = event.currentTarget;
+    
+    console.log('Submenu element:', submenu); // Debug
+    console.log('Has show class:', submenu?.classList.contains('show')); // Debug
+    
+    if (submenu) {
+        submenu.classList.toggle('show');
+        menuLink.classList.toggle('submenu-open');
+        console.log('After toggle:', submenu.classList); // Debug
+    }
+}
+
+// Login form handler
 if (document.getElementById('loginForm')) {
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -56,6 +101,7 @@ if (document.getElementById('loginForm')) {
     });
 }
 
+// Set user info di semua halaman
 if (window.location.pathname.includes('dashboard.html') || 
     window.location.pathname.includes('tracking.html') || 
     window.location.pathname.includes('stok.html')) {
@@ -76,25 +122,126 @@ if (window.location.pathname.includes('dashboard.html') ||
         userAvatarElements.forEach(el => el.textContent = initials);
     }
 }
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
 
-if (document.getElementById('totalBahan')) {
-    const totalBahan = dataBahanAjar.length;
-    const totalStok = dataBahanAjar.reduce((sum, item) => sum + item.stok, 0);
-    
-    document.getElementById('totalBahan').textContent = totalBahan;
-    document.getElementById('totalStok').textContent = totalStok.toLocaleString('id-ID');
-    
-    const trackingKeys = Object.keys(dataTracking);
-    const totalPengiriman = trackingKeys.length;
-    const dalamPerjalanan = trackingKeys.filter(key => {
-        const status = dataTracking[key].status.toLowerCase();
-        return status.includes('dalam perjalanan') || status.includes('dikirim');
-    }).length;
-    
-    document.getElementById('totalPengiriman').textContent = totalPengiriman;
-    document.getElementById('dalamPerjalanan').textContent = dalamPerjalanan;
+const currentTheme = localStorage.getItem('theme') || 'light';
+if (currentTheme === 'dark') {
+  body.classList.add('dark-mode');
 }
 
+// Animate Progress Bars
+function animateProgressBars() {
+  const progressBars = document.querySelectorAll('.progress-fill');
+  
+  progressBars.forEach((bar, index) => {
+    const progress = bar.getAttribute('data-progress');
+    setTimeout(() => {
+      bar.style.width = progress + '%';
+    }, index * 150);
+  });
+}
+
+// Intersection Observer for animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      if (entry.target.classList.contains('metrics-grid')) {
+        animateProgressBars();
+      }
+      if (entry.target.classList.contains('bar-chart')) {
+        animateBarChart();
+      }
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+// Observe elements
+const metricsGrid = document.querySelector('.metrics-grid');
+const barChart = document.querySelector('.bar-chart');
+
+if (metricsGrid) observer.observe(metricsGrid);
+if (barChart) observer.observe(barChart);
+
+// Counter Animation for Metric Values
+function animateCounter(element, target, duration = 2000) {
+  const start = 0;
+  const increment = target / (duration / 16);
+  let current = start;
+  
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+    
+    if (element.textContent.includes('$')) {
+      element.textContent = '$' + Math.floor(current).toLocaleString();
+    } else if (element.textContent.includes('%')) {
+      element.textContent = current.toFixed(2) + '%';
+    } else {
+      element.textContent = Math.floor(current).toLocaleString();
+    }
+  }, 16);
+}
+
+// Animate metric values on load
+window.addEventListener('load', () => {
+  const metricValues = document.querySelectorAll('.metric-value');
+  
+  metricValues.forEach((metric, index) => {
+    const text = metric.textContent;
+    let targetValue;
+    
+    if (text.includes('$')) {
+      targetValue = parseFloat(text.replace(/[$,]/g, ''));
+    } else if (text.includes('%')) {
+      targetValue = parseFloat(text.replace('%', ''));
+    } else {
+      targetValue = parseFloat(text.replace(/,/g, ''));
+    }
+    
+    metric.textContent = text.includes('$') ? '$0' : (text.includes('%') ? '0%' : '0');
+    
+    setTimeout(() => {
+      animateCounter(metric, targetValue);
+    }, 300 + (index * 150));
+  });
+});
+
+// Hover effect for metric cards
+document.querySelectorAll('.metric-card').forEach(card => {
+  card.addEventListener('mouseenter', function() {
+    const icon = this.querySelector('.metric-icon');
+    icon.style.transform = 'scale(1.1) rotate(5deg)';
+  });
+  
+  card.addEventListener('mouseleave', function() {
+    const icon = this.querySelector('.metric-icon');
+    icon.style.transform = 'scale(1) rotate(0deg)';
+  });
+});
+
+// Add pulse animation to trend badges
+document.querySelectorAll('.trend-badge').forEach(badge => {
+  setInterval(() => {
+    badge.style.transform = 'scale(1.05)';
+    setTimeout(() => {
+      badge.style.transform = 'scale(1)';
+    }, 150);
+  }, 3000);
+});
+
+
+
+// Fungsi untuk search delivery order
 function searchDeliveryOrder() {
     const searchValue = document.getElementById('searchDO').value.trim();
     const trackingResult = document.getElementById('trackingResult');
@@ -138,10 +285,12 @@ function searchDeliveryOrder() {
     }
 }
 
+// Fungsi untuk update progress bar
 function updateProgressBar(status, prefix) {
     const statusLower = status.toLowerCase();
     let progress = 0;
     
+    // Reset semua step
     for (let i = 1; i <= 4; i++) {
         const step = document.getElementById(prefix + 'Step' + i);
         if (step) {
@@ -149,6 +298,7 @@ function updateProgressBar(status, prefix) {
         }
     }
     
+    // Set progress berdasarkan status
     if (statusLower.includes('terkirim') || statusLower.includes('selesai')) {
         progress = 100;
         for (let i = 1; i <= 4; i++) {
@@ -179,12 +329,14 @@ function updateProgressBar(status, prefix) {
         if (step1) step1.classList.add('active');
     }
     
+    // Update progress line
     const progressLine = document.getElementById(prefix + 'Line');
     if (progressLine) {
         progressLine.style.width = progress + '%';
     }
 }
 
+// Fungsi untuk format tanggal
 function formatDate(dateString) {
     const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
                     'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -192,6 +344,7 @@ function formatDate(dateString) {
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
+// Load tabel tracking di halaman tracking.html
 if (document.getElementById('trackingTableBody')) {
     const tableBody = document.getElementById('trackingTableBody');
     
@@ -222,6 +375,7 @@ if (document.getElementById('trackingTableBody')) {
     });
 }
 
+// Fungsi untuk show detail tracking
 function showDetail(nomorDO) {
     const tracking = dataTracking[nomorDO];
     
@@ -253,15 +407,18 @@ function showDetail(nomorDO) {
     }
 }
 
+// Fungsi untuk close detail modal
 function closeDetail() {
     document.getElementById('detailModal').classList.remove('show');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// Load tabel stok di halaman stok.html
 if (document.getElementById('stokTableBody')) {
     loadStokTable();
 }
 
+// Fungsi untuk load tabel stok
 function loadStokTable() {
     const tableBody = document.getElementById('stokTableBody');
     tableBody.innerHTML = '';
@@ -295,6 +452,7 @@ function loadStokTable() {
     });
 }
 
+// Fungsi untuk tambah bahan ajar
 function tambahBahanAjar(event) {
     event.preventDefault();
     
