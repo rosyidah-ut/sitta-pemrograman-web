@@ -38,7 +38,10 @@
               required
             />
           </div>
-
+          <div class="login-links">
+            <a id="openForgotPassword">Lupa Password?</a>
+            <a id="openRegister">Daftar Akun Baru</a>
+          </div> <br>
           <button type="submit" class="btn btn-primary">Login</button>
         </form>
 
@@ -54,6 +57,99 @@
           <strong>Demo Login:</strong><br />
           Email: admin@ut.ac.id<br />
           Password: admin123
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Lupa Password -->
+    <div id="forgotPasswordModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Lupa Password</h2>
+          <button class="close-modal" id="closeForgotPassword">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="forgotSuccessMessage" class="success-message">
+            Link reset password telah dikirim ke email Anda!
+          </div>
+          <p>
+            Masukkan email Anda dan kami akan mengirimkan link untuk reset
+            password.
+          </p>
+          <form id="forgotPasswordForm">
+            <div class="form-group">
+              <label for="forgotEmail">Email</label>
+              <input
+                type="email"
+                id="forgotEmail"
+                class="form-control"
+                placeholder="Masukkan email Anda"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Kirim Link Reset
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Daftar -->
+    <div id="registerModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Daftar Akun Baru</h2>
+          <button class="close-modal" id="closeRegister">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="registerSuccessMessage" class="success-message">
+            Pendaftaran berhasil! Silakan login dengan akun Anda.
+          </div>
+          <form id="registerForm">
+            <div class="form-group">
+              <label for="regName">Nama Lengkap</label>
+              <input
+                type="text"
+                id="regName"
+                class="form-control"
+                placeholder="Masukkan nama lengkap"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="regEmail">Email</label>
+              <input
+                type="email"
+                id="regEmail"
+                class="form-control"
+                placeholder="Masukkan email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="regPassword">Password</label>
+              <input
+                type="password"
+                id="regPassword"
+                class="form-control"
+                placeholder="Minimal 6 karakter"
+                required
+                minlength="6"
+              />
+            </div>
+            <div class="form-group">
+              <label for="regConfirmPassword">Konfirmasi Password</label>
+              <input
+                type="password"
+                id="regConfirmPassword"
+                class="form-control"
+                placeholder="Masukkan ulang password"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Daftar</button>
+          </form>
         </div>
       </div>
     </div>
